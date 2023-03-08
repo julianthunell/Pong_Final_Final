@@ -5,9 +5,7 @@ import java.util.ArrayList;
 public class score {
     public static int matchesplayed =0;
     public static ArrayList<String> match_data = new ArrayList<String>();
-    public static String[] leaderboard_data = new String[10];
-    public static String[] leaderboard_official = new String[10];
-
+    public static int[] leaderboard_official = new int[10];
     public static void readMatchesPlayed(){
         try {
             BufferedReader reader = new BufferedReader(new FileReader("./matches_played.txt"));
@@ -51,17 +49,49 @@ public class score {
         }
     }
     public static void leaderboard(){
+
+        // lägger till differens i slutet av stringen vilkt sedan används för att sortera
+        int[][] leaderboard_data = new int[matchesplayed][4];
         for (int i = 0; i < matchesplayed; i++) {
             String element = match_data.get(i);
-
             int[] numbers = parseIntArray(element.split("-"));
-
-            for (int j = 0; j <= 10; j++) {
-
+            int diff;
+            if (numbers[1]>numbers[2]){
+                diff = numbers[1]-numbers[2];
             }
-
+            else{
+                diff = numbers[2]-numbers[1];
+            }
+            leaderboard_data[i][0]=numbers[0];
+            leaderboard_data[i][1]=numbers[1];
+            leaderboard_data[i][2]=numbers[2];
+            leaderboard_data[i][3]=diff;
+        }
+        boolean swap=true;
+        int temp_array []= new int[4];
+        while (swap){
+            swap=false;
+            for (int i = 0; i < matchesplayed-1; i++) {
+                if (leaderboard_data[i][3] < leaderboard_data[i+1][3]){
+                    swap=true;
+                    for (int j = 0; j < 4; j++) {
+                        temp_array[j] = leaderboard_data[i][j];
+                    }
+                    for (int j = 0; j < 4; j++) {
+                        leaderboard_data[i][j]=leaderboard_data[i+1][j];
+                    }
+                    for (int j = 0; j < 4; j++) {
+                        leaderboard_data[i+1][j]=temp_array[j];
+                    }
+                }
+            }
+        }
+        System.out.println("Top 5 matcher");
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Match "+leaderboard_data[i][0]+": "+leaderboard_data[i][1]+" - "+leaderboard_data[i][2]);
         }
     }
+
 
     public static int[] parseIntArray(String[] strArray) {
         int[] intArray = new int[strArray.length];

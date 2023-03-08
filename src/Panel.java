@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class Panel extends JPanel implements ActionListener{
     static public boolean game = false;
     Timer timer;
-    public static int PanelHeight = 350;
+    public static int panelHeight = 350;
     public static int p1score=0;
     public static int p2score=0;
     // tar in bilder för Start screen och alla siffror
@@ -30,7 +30,7 @@ public class Panel extends JPanel implements ActionListener{
         score3 = new ImageIcon("3.png").getImage();
         score4 = new ImageIcon("4.png").getImage();
         score5 = new ImageIcon("5.png").getImage();
-        this.setPreferredSize(new Dimension(500,PanelHeight));
+        this.setPreferredSize(new Dimension(500, panelHeight));
         addKeyListener(new inputs());
 
     }
@@ -39,7 +39,7 @@ public class Panel extends JPanel implements ActionListener{
         Graphics2D G = (Graphics2D) g;
             super.paint(g);
             if(game==true){ //rita spel
-                G.fillRect((int)ball.Position_X,(int)ball.Position_Y, 10, 10);
+                G.fillRect((int)ball.position_x,(int)ball.position_y, 10, 10);
                 G.fillRect(10,inputs.p1_yPos,10,45);
                 G.fillRect(480,inputs.p2_yPos,10,45);
                 for (int i = 0; i < 350; i=i+10) {
@@ -73,8 +73,11 @@ public class Panel extends JPanel implements ActionListener{
         //stänger av spelet ifall score = 5
         if (p1score==5 || p2score==5) {
             score.SaveScore();
+            score.readMatchesPlayed();
             p1score = 0;
             p2score = 0;
+            inputs.p1_yPos= Panel.panelHeight /2;
+            inputs.p2_yPos= Panel.panelHeight /2;
             game=false;
         }
         //checkar nya inputs från tangentbord

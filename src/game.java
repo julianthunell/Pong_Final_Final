@@ -6,6 +6,5 @@ public class game {
         frame = new Frame(panel);
         score.readMatchesPlayed();
         panel.requestFocus();
-
     }
 }

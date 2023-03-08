@@ -2,10 +2,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class inputs implements KeyListener {
-    static int p1_yPos= Panel.PanelHeight/2;
-    static int p2_yPos= Panel.PanelHeight/2;
+    static int p1_yPos= Panel.panelHeight /2;
+    static int p2_yPos= Panel.panelHeight /2;
     static boolean p1ner,p1upp,p2ner,p2upp;
-    static int Move = 3;
+    static int Move = 6;
     public static void move(){
         if (p1ner==true && p1_yPos<=350-45){
             p1_yPos=p1_yPos+Move;
